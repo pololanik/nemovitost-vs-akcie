@@ -11,18 +11,18 @@ import './App.css';
 const defaultConfig: Config = {
   propertyPrice: 4_000_000,
   downPayment: 0,
-  mortgageRate: 5.0,
+  mortgageRate: 4.5,           // aktuální sazba CZ ~4.5%, historický průměr 4.2%
   mortgageTerm: 30,
-  propertyGrowthRate: 3.0,
-  monthlyRent: 12_000,
-  rentGrowthRate: 3.0,
+  propertyGrowthRate: 4.0,     // historický průměr ČR ~4.1% za 20 let
+  monthlyRent: 13_000,         // ~3.9% hrubý yield, odpovídá regionům ČR
+  rentGrowthRate: 4.0,         // historický průměr ČR ~4.1%, Praha ~7%
   vacancyMonths: 1,
-  maintenanceFund: 2_500,
-  maintenanceGrowthRate: 2.0,
-  insuranceYearly: 3_000,
-  propertyTax: 1_500,
-  stockReturnRate: 8.0,
-  years: 30,
+  maintenanceFund: 2_000,      // ~30 Kč/m² pro 65m² byt
+  maintenanceGrowthRate: 3.0,  // blíže inflaci
+  insuranceYearly: 3_500,      // pojištění nemovitosti + domácnosti
+  propertyTax: 1_200,          // typický byt 60-70m²
+  stockReturnRate: 8.0,        // MSCI World ~8.2%, S&P 500 ~9.8%
+  years: 25,
 };
 
 function formatCZK(value: number): string {
