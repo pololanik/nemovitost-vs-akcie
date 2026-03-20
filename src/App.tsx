@@ -22,7 +22,7 @@ const defaultConfig: Config = {
   insuranceYearly: 3_500,      // pojištění nemovitosti + domácnosti
   propertyTax: 1_200,          // typický byt 60-70m²
   stockReturnRate: 8.0,        // MSCI World ~8.2%, S&P 500 ~9.8%
-  years: 25,
+  years: 30,
 };
 
 function formatCZK(value: number): string {
