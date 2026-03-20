@@ -107,10 +107,6 @@ function App() {
     <div className="app">
       <header>
         <h1>Nemovitost vs. Akcie</h1>
-        <p className="subtitle">Vyplatí se koupit byt na hypotéku a pronajímat, nebo investovat do akcií?</p>
-        <button className="share-btn" onClick={handleShare}>
-          {copied ? 'Zkopírováno!' : 'Sdílet konfiguraci'}
-        </button>
       </header>
 
       <div className="layout">
@@ -153,6 +149,10 @@ function App() {
             <h3>Horizont</h3>
             <InputField label="Investiční horizont" value={config.years} onChange={(v) => update('years', v)} step={1} suffix="let" min={1} max={40} />
           </section>
+
+          <button className="share-btn" onClick={handleShare}>
+            {copied ? 'Zkopírováno!' : 'Sdílet konfiguraci'}
+          </button>
         </aside>
 
         <main className="content">
