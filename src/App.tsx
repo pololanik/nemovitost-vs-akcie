@@ -129,7 +129,7 @@ function App() {
             <h3>Pronájem</h3>
             <InputField label="Měsíční nájem" value={config.monthlyRent} onChange={(v) => update('monthlyRent', v)} step={500} suffix="Kč" min={0} />
             <InputField label="Růst nájmu" value={config.rentGrowthRate} onChange={(v) => update('rentGrowthRate', v)} step={0.1} suffix="% ročně" min={0} max={15} />
-            <InputField label="Prázdné měsíce za rok" value={config.vacancyMonths} onChange={(v) => update('vacancyMonths', v)} step={0.5} suffix="měs." min={0} max={12} />
+            <InputField label="Prázdné měsíce za rok" value={config.vacancyMonths} onChange={(v) => update('vacancyMonths', v)} step={0.1} suffix="měs." min={0} max={12} />
           </section>
 
           <section>
