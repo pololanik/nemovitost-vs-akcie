@@ -89,6 +89,7 @@ function App() {
     year: d.year,
     'Výtěžek z prodeje nemovitosti': Math.round(d.propertyEquity),
     'Hodnota akcií': Math.round(d.stockNetWorth),
+    'Vlastní vklad celkem': Math.round(d.totalPropertyCosts),
     'Hodnota nemovitosti': Math.round(d.propertyValue),
     'Zbývající hypotéka': Math.round(d.remainingMortgage),
   })), [data]);
@@ -200,6 +201,7 @@ function App() {
                   <Legend verticalAlign="top" />
                   <Line type="monotone" dataKey="Výtěžek z prodeje nemovitosti" stroke="#e67e22" strokeWidth={3} dot={false} />
                   <Line type="monotone" dataKey="Hodnota akcií" stroke="#2ecc71" strokeWidth={3} dot={false} />
+                  <Line type="monotone" dataKey="Vlastní vklad celkem" stroke="#3498db" strokeWidth={2} strokeDasharray="4 4" dot={false} />
                   <Line type="monotone" dataKey="Hodnota nemovitosti" stroke="#e67e22" strokeWidth={1} strokeDasharray="5 5" dot={false} />
                   <Line type="monotone" dataKey="Zbývající hypotéka" stroke="#e74c3c" strokeWidth={1} strokeDasharray="5 5" dot={false} />
                 </LineChart>
