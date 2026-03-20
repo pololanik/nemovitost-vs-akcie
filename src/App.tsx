@@ -14,6 +14,7 @@ const defaultConfig: Config = {
   mortgageRate: 4.5,           // aktuální sazba CZ ~4.5%, historický průměr 4.2%
   mortgageTerm: 30,
   propertyGrowthRate: 4.0,     // historický průměr ČR ~4.1% za 20 let
+  acquisitionCost: 100_000,    // provize RK, právní služby, odhad apod.
   monthlyRent: 13_000,         // ~3.9% hrubý yield, odpovídá regionům ČR
   rentGrowthRate: 4.0,         // historický průměr ČR ~4.1%, Praha ~7%
   vacancyMonths: 1,
@@ -123,6 +124,7 @@ function App() {
             <InputField label="Úrok hypotéky" value={config.mortgageRate} onChange={(v) => update('mortgageRate', v)} step={0.1} suffix="% p.a." min={0} max={15} />
             <InputField label="Doba splácení" value={config.mortgageTerm} onChange={(v) => update('mortgageTerm', v)} step={1} suffix="let" min={1} max={40} />
             <InputField label="Růst ceny nemovitosti" value={config.propertyGrowthRate} onChange={(v) => update('propertyGrowthRate', v)} step={0.1} suffix="% ročně" min={-5} max={15} />
+            <InputField label="Náklady na koupi (provize aj.)" value={config.acquisitionCost} onChange={(v) => update('acquisitionCost', v)} step={10000} suffix="Kč" min={0} />
           </section>
 
           <section>

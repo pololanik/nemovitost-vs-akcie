@@ -7,6 +7,7 @@ const KEY_MAP: Record<keyof Config, string> = {
   mortgageRate: 'ur',      // úrok
   mortgageTerm: 'ds',      // doba splácení
   propertyGrowthRate: 'rn', // růst nemovitosti
+  acquisitionCost: 'nk',   // náklady na koupi
   monthlyRent: 'nj',       // nájem
   rentGrowthRate: 'rp',    // růst pronájmu
   vacancyMonths: 'pm',     // prázdné měsíce

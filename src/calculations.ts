@@ -28,10 +28,11 @@ export function calculate(config: Config): YearData[] {
     : 0;
   const data: YearData[] = [];
 
-  // V akciovém scénáři stejný vlastní vklad jde rovnou do akcií na začátku
-  let stockValue = config.downPayment;
-  let totalStockInvested = config.downPayment;
-  let totalPropertyCosts = config.downPayment; // vlastní vklad je náklad na nemovitost
+  // V akciovém scénáři stejný vlastní vklad + náklady na koupi jdou rovnou do akcií
+  const initialInvestment = config.downPayment + config.acquisitionCost;
+  let stockValue = initialInvestment;
+  let totalStockInvested = initialInvestment;
+  let totalPropertyCosts = initialInvestment; // vlastní vklad + náklady na koupi
 
   const monthlyStockReturn = Math.pow(1 + config.stockReturnRate / 100, 1 / 12) - 1;
 

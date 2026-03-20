@@ -5,6 +5,7 @@ export interface Config {
   mortgageRate: number;           // Úroková sazba hypotéky (% p.a.)
   mortgageTerm: number;           // Doba splácení (roky)
   propertyGrowthRate: number;     // Roční růst ceny nemovitosti (%)
+  acquisitionCost: number;        // Náklady na koupi - provize, daň z nabytí atd. (Kč)
 
   // Pronájem
   monthlyRent: number;            // Měsíční nájem (Kč)
