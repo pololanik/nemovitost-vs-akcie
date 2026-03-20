@@ -122,27 +122,27 @@ function App() {
             )}
             <InputField label="Úrok hypotéky" value={config.mortgageRate} onChange={(v) => update('mortgageRate', v)} step={0.1} suffix="% p.a." min={0} max={15} />
             <InputField label="Doba splácení" value={config.mortgageTerm} onChange={(v) => update('mortgageTerm', v)} step={1} suffix="let" min={1} max={40} />
-            <InputField label="Růst ceny nemovitosti" value={config.propertyGrowthRate} onChange={(v) => update('propertyGrowthRate', v)} step={0.5} suffix="% ročně" min={-5} max={15} />
+            <InputField label="Růst ceny nemovitosti" value={config.propertyGrowthRate} onChange={(v) => update('propertyGrowthRate', v)} step={0.1} suffix="% ročně" min={-5} max={15} />
           </section>
 
           <section>
             <h3>Pronájem</h3>
             <InputField label="Měsíční nájem" value={config.monthlyRent} onChange={(v) => update('monthlyRent', v)} step={500} suffix="Kč" min={0} />
-            <InputField label="Růst nájmu" value={config.rentGrowthRate} onChange={(v) => update('rentGrowthRate', v)} step={0.5} suffix="% ročně" min={0} max={15} />
+            <InputField label="Růst nájmu" value={config.rentGrowthRate} onChange={(v) => update('rentGrowthRate', v)} step={0.1} suffix="% ročně" min={0} max={15} />
             <InputField label="Prázdné měsíce za rok" value={config.vacancyMonths} onChange={(v) => update('vacancyMonths', v)} step={0.5} suffix="měs." min={0} max={12} />
           </section>
 
           <section>
             <h3>Náklady</h3>
             <InputField label="Fond oprav (měsíčně)" value={config.maintenanceFund} onChange={(v) => update('maintenanceFund', v)} step={100} suffix="Kč" min={0} />
-            <InputField label="Růst fondu oprav" value={config.maintenanceGrowthRate} onChange={(v) => update('maintenanceGrowthRate', v)} step={0.5} suffix="% ročně" min={0} max={15} />
+            <InputField label="Růst fondu oprav" value={config.maintenanceGrowthRate} onChange={(v) => update('maintenanceGrowthRate', v)} step={0.1} suffix="% ročně" min={0} max={15} />
             <InputField label="Pojištění (ročně)" value={config.insuranceYearly} onChange={(v) => update('insuranceYearly', v)} step={500} suffix="Kč" min={0} />
             <InputField label="Daň z nemovitosti (ročně)" value={config.propertyTax} onChange={(v) => update('propertyTax', v)} step={100} suffix="Kč" min={0} />
           </section>
 
           <section>
             <h3>Akcie</h3>
-            <InputField label="Průměrný roční výnos" value={config.stockReturnRate} onChange={(v) => update('stockReturnRate', v)} step={0.5} suffix="%" min={-10} max={30} />
+            <InputField label="Průměrný roční výnos" value={config.stockReturnRate} onChange={(v) => update('stockReturnRate', v)} step={0.1} suffix="%" min={-10} max={30} />
           </section>
 
           <section>
