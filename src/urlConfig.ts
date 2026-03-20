@@ -3,6 +3,7 @@ import type { Config } from './types';
 // Short keys: max 2-3 chars, human-readable Czech abbreviations
 const KEY_MAP: Record<keyof Config, string> = {
   propertyPrice: 'cn',     // cena nemovitosti
+  downPayment: 'vv',       // vlastní vklad
   mortgageRate: 'ur',      // úrok
   mortgageTerm: 'ds',      // doba splácení
   propertyGrowthRate: 'rn', // růst nemovitosti

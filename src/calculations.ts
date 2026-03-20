@@ -22,12 +22,16 @@ function calculateRemainingMortgage(principal: number, annualRate: number, total
 }
 
 export function calculate(config: Config): YearData[] {
-  const monthlyMortgage = calculateMonthlyMortgage(config.propertyPrice, config.mortgageRate, config.mortgageTerm);
+  const mortgageAmount = config.propertyPrice - config.downPayment;
+  const monthlyMortgage = mortgageAmount > 0
+    ? calculateMonthlyMortgage(mortgageAmount, config.mortgageRate, config.mortgageTerm)
+    : 0;
   const data: YearData[] = [];
 
-  let stockValue = 0;
-  let totalStockInvested = 0;
-  let totalPropertyCosts = 0;
+  // V akciovém scénáři stejný vlastní vklad jde rovnou do akcií na začátku
+  let stockValue = config.downPayment;
+  let totalStockInvested = config.downPayment;
+  let totalPropertyCosts = config.downPayment; // vlastní vklad je náklad na nemovitost
 
   const monthlyStockReturn = Math.pow(1 + config.stockReturnRate / 100, 1 / 12) - 1;
 
@@ -35,9 +39,11 @@ export function calculate(config: Config): YearData[] {
     const currentRent = config.monthlyRent * Math.pow(1 + config.rentGrowthRate / 100, year);
     const currentMaintenance = config.maintenanceFund * Math.pow(1 + config.maintenanceGrowthRate / 100, year);
     const propertyValue = config.propertyPrice * Math.pow(1 + config.propertyGrowthRate / 100, year);
-    const remainingMortgage = year === 0
-      ? config.propertyPrice
-      : calculateRemainingMortgage(config.propertyPrice, config.mortgageRate, config.mortgageTerm, year * 12);
+    const remainingMortgage = mortgageAmount <= 0
+      ? 0
+      : year === 0
+        ? mortgageAmount
+        : calculateRemainingMortgage(mortgageAmount, config.mortgageRate, config.mortgageTerm, year * 12);
 
     // Efektivní měsíční příjem z nájmu (po odečtení prázdných měsíců)
     const effectiveMonthlyRent = currentRent * (12 - config.vacancyMonths) / 12;

@@ -1,6 +1,7 @@
 export interface Config {
   // Nemovitost
   propertyPrice: number;          // Cena nemovitosti (Kč)
+  downPayment: number;            // Vlastní vklad (Kč)
   mortgageRate: number;           // Úroková sazba hypotéky (% p.a.)
   mortgageTerm: number;           // Doba splácení (roky)
   propertyGrowthRate: number;     // Roční růst ceny nemovitosti (%)

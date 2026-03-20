@@ -10,6 +10,7 @@ import './App.css';
 
 const defaultConfig: Config = {
   propertyPrice: 4_000_000,
+  downPayment: 0,
   mortgageRate: 5.0,
   mortgageTerm: 30,
   propertyGrowthRate: 3.0,
@@ -117,6 +118,12 @@ function App() {
           <section>
             <h3>Nemovitost</h3>
             <InputField label="Cena nemovitosti" value={config.propertyPrice} onChange={(v) => update('propertyPrice', v)} step={100000} suffix="Kč" min={0} />
+            <InputField label="Vlastní vklad" value={config.downPayment} onChange={(v) => update('downPayment', v)} step={100000} suffix="Kč" min={0} max={config.propertyPrice} />
+            {config.downPayment > 0 && (
+              <div className="info-note">
+                Hypotéka: {formatCZK(config.propertyPrice - config.downPayment)} ({Math.round((1 - config.downPayment / config.propertyPrice) * 100)}% ceny)
+              </div>
+            )}
             <InputField label="Úrok hypotéky" value={config.mortgageRate} onChange={(v) => update('mortgageRate', v)} step={0.1} suffix="% p.a." min={0} max={15} />
             <InputField label="Doba splácení" value={config.mortgageTerm} onChange={(v) => update('mortgageTerm', v)} step={1} suffix="let" min={1} max={40} />
             <InputField label="Růst ceny nemovitosti" value={config.propertyGrowthRate} onChange={(v) => update('propertyGrowthRate', v)} step={0.5} suffix="% ročně" min={-5} max={15} />
@@ -158,7 +165,10 @@ function App() {
             <div className="card">
               <div className="card-label">Hodnota akcií</div>
               <div className="card-value stock">{formatCZK(lastYear.stockNetWorth)}</div>
-              <div className="card-detail">Investováno celkem: {formatCZK(lastYear.totalStockInvested)}</div>
+              <div className="card-detail">
+                Investováno celkem: {formatCZK(lastYear.totalStockInvested)}
+                {config.downPayment > 0 && <> (z toho počáteční vklad: {formatCZK(config.downPayment)})</>}
+              </div>
             </div>
             <div className="card">
               <div className="card-label">Rozdíl ve prospěch</div>

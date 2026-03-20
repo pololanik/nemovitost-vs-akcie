@@ -123,6 +123,13 @@ header h1 {
   white-space: nowrap;
 }
 
+.info-note {
+  font-size: 0.78rem;
+  color: #3498db;
+  margin: -4px 0 6px;
+  padding-left: 2px;
+}
+
 /* Content */
 .content {
   flex: 1;
