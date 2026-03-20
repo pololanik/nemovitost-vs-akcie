@@ -25,6 +25,26 @@ header h1 {
   font-size: 1rem;
 }
 
+.share-btn {
+  margin-top: 12px;
+  padding: 8px 20px;
+  border: 1px solid #3498db;
+  background: #3498db;
+  color: #fff;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.share-btn:hover {
+  background: #2980b9;
+}
+
+.share-btn:active {
+  transform: scale(0.97);
+}
+
 .layout {
   display: flex;
   gap: 28px;

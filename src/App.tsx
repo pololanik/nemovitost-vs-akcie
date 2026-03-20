@@ -1,10 +1,11 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useCallback, useEffect } from 'react';
 import {
   LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer,
   BarChart, Bar,
 } from 'recharts';
 import type { Config, YearData } from './types';
 import { calculate } from './calculations';
+import { queryToConfig, buildShareUrl } from './urlConfig';
 import './App.css';
 
 const defaultConfig: Config = {
@@ -56,12 +57,29 @@ function InputField({
 }
 
 function App() {
-  const [config, setConfig] = useState<Config>(defaultConfig);
+  const [config, setConfig] = useState<Config>(() =>
+    queryToConfig(window.location.search, defaultConfig)
+  );
   const [activeTab, setActiveTab] = useState<'chart' | 'table' | 'cashflow'>('chart');
+  const [copied, setCopied] = useState(false);
+
+  // Sync config changes to URL (without page reload)
+  useEffect(() => {
+    const url = buildShareUrl(config, defaultConfig);
+    window.history.replaceState(null, '', url);
+  }, [config]);
 
   const update = <K extends keyof Config>(key: K, value: Config[K]) => {
     setConfig((prev) => ({ ...prev, [key]: value }));
   };
+
+  const handleShare = useCallback(() => {
+    const url = buildShareUrl(config, defaultConfig);
+    navigator.clipboard.writeText(url).then(() => {
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    });
+  }, [config]);
 
   const data: YearData[] = useMemo(() => calculate(config), [config]);
 
@@ -89,6 +107,9 @@ function App() {
       <header>
         <h1>Nemovitost vs. Akcie</h1>
         <p className="subtitle">Vyplatí se koupit byt na hypotéku a pronajímat, nebo investovat do akcií?</p>
+        <button className="share-btn" onClick={handleShare}>
+          {copied ? 'Zkopírováno!' : 'Sdílet konfiguraci'}
+        </button>
       </header>
 
       <div className="layout">
