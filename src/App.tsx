@@ -40,14 +40,29 @@ function InputField({
   label: string; value: number; onChange: (v: number) => void;
   step?: number; suffix?: string; min?: number; max?: number;
 }) {
+  const [text, setText] = useState(String(value));
+  const [focused, setFocused] = useState(false);
+
+  useEffect(() => {
+    if (!focused) setText(String(value));
+  }, [value, focused]);
+
   return (
     <div className="input-field">
       <label>{label}</label>
       <div className="input-wrapper">
         <input
           type="number"
-          value={value}
-          onChange={(e) => onChange(Number(e.target.value))}
+          value={focused ? text : value}
+          onChange={(e) => {
+            setText(e.target.value);
+            if (e.target.value !== '') onChange(Number(e.target.value));
+          }}
+          onFocus={() => setFocused(true)}
+          onBlur={() => {
+            setFocused(false);
+            if (text === '') onChange(min ?? 0);
+          }}
           step={step || 1}
           min={min}
           max={max}
