@@ -22,6 +22,10 @@ const defaultConfig: Config = {
   maintenanceGrowthRate: 3.0,  // blíže inflaci
   insuranceYearly: 3_500,      // pojištění nemovitosti + domácnosti
   propertyTax: 1_200,          // typický byt 60-70m²
+  rentalIncomeTaxRate: 15,      // sazba daně z příjmu z pronájmu
+  useExpenseLumpSum: true,      // paušální výdaje 30%
+  mortgageInterestDeduction: true, // odpočet úroků z hypotéky
+  personalTaxRate: 15,          // sazba daně z příjmu
   stockReturnRate: 8.0,        // MSCI World ~8.2%, S&P 500 ~9.8%
   years: 30,
 };
@@ -40,14 +44,29 @@ function InputField({
   label: string; value: number; onChange: (v: number) => void;
   step?: number; suffix?: string; min?: number; max?: number;
 }) {
+  const [text, setText] = useState(String(value));
+  const [focused, setFocused] = useState(false);
+
+  useEffect(() => {
+    if (!focused) setText(String(value));
+  }, [value, focused]);
+
   return (
     <div className="input-field">
       <label>{label}</label>
       <div className="input-wrapper">
         <input
           type="number"
-          value={value}
-          onChange={(e) => onChange(Number(e.target.value))}
+          value={focused ? text : value}
+          onChange={(e) => {
+            setText(e.target.value);
+            if (e.target.value !== '') onChange(Number(e.target.value));
+          }}
+          onFocus={() => setFocused(true)}
+          onBlur={() => {
+            setFocused(false);
+            if (text === '') onChange(min ?? 0);
+          }}
           step={step || 1}
           min={min}
           max={max}
@@ -141,6 +160,31 @@ function App() {
             <InputField label="Růst fondu oprav" value={config.maintenanceGrowthRate} onChange={(v) => update('maintenanceGrowthRate', v)} step={0.1} suffix="% ročně" min={0} max={15} />
             <InputField label="Pojištění (ročně)" value={config.insuranceYearly} onChange={(v) => update('insuranceYearly', v)} step={500} suffix="Kč" min={0} />
             <InputField label="Daň z nemovitosti (ročně)" value={config.propertyTax} onChange={(v) => update('propertyTax', v)} step={100} suffix="Kč" min={0} />
+          </section>
+
+          <section>
+            <h3>Daně</h3>
+            <InputField label="Daň z příjmu z pronájmu" value={config.rentalIncomeTaxRate} onChange={(v) => update('rentalIncomeTaxRate', v)} step={1} suffix="%" min={0} max={50} />
+            <div className="checkbox-field">
+              <label>
+                <input type="checkbox" checked={config.useExpenseLumpSum} onChange={(e) => update('useExpenseLumpSum', e.target.checked)} />
+                Paušální výdaje 30%
+              </label>
+            </div>
+            <div className="checkbox-field">
+              <label>
+                <input type="checkbox" checked={config.mortgageInterestDeduction} onChange={(e) => update('mortgageInterestDeduction', e.target.checked)} />
+                Odpočet úroků z hypotéky
+              </label>
+            </div>
+            {config.mortgageInterestDeduction && (
+              <InputField label="Sazba daně z příjmu" value={config.personalTaxRate} onChange={(v) => update('personalTaxRate', v)} step={1} suffix="%" min={0} max={50} />
+            )}
+            {data.length > 0 && data[data.length - 1].saleTax > 0 && (
+              <div className="info-note">
+                Daň z prodeje (do 10 let): {formatCZK(data[data.length - 1].saleTax)}
+              </div>
+            )}
           </section>
 
           <section>
