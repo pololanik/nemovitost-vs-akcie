@@ -125,6 +125,25 @@ header h1 {
   padding-left: 2px;
 }
 
+.checkbox-field {
+  margin: 4px 0 8px;
+}
+
+.checkbox-field label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.85rem;
+  color: #ccc;
+  cursor: pointer;
+}
+
+.checkbox-field input[type="checkbox"] {
+  accent-color: #3498db;
+  width: 16px;
+  height: 16px;
+}
+
 /* Content */
 .content {
   flex: 1;

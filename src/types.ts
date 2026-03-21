@@ -18,6 +18,12 @@ export interface Config {
   insuranceYearly: number;        // Pojištění ročně (Kč)
   propertyTax: number;            // Daň z nemovitosti ročně (Kč)
 
+  // Daně
+  rentalIncomeTaxRate: number;    // Sazba daně z příjmu z pronájmu (%)
+  useExpenseLumpSum: boolean;     // Použít paušální výdaje 30%?
+  mortgageInterestDeduction: boolean; // Odpočet úroků z hypotéky od základu daně?
+  personalTaxRate: number;        // Sazba daně z příjmu (%)
+
   // Akcie
   stockReturnRate: number;        // Průměrný roční výnos akcií (%)
 
@@ -42,6 +48,11 @@ export interface YearData {
   monthlyRentIncome: number;    // po odečtení vacancy
   monthlyTopUp: number;         // kolik doplácím
   monthlyMaintenanceFund: number;
+
+  // Daně
+  monthlyRentalTax: number;       // měsíční daň z pronájmu
+  yearlyInterestDeduction: number; // roční úspora z odpočtu úroků
+  saleTax: number;                // daň z prodeje nemovitosti (0 pokud > 10 let)
 
   // Čistý výnos
   propertyNetWorth: number;     // equity - kumulativní náklady navíc

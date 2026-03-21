@@ -1,7 +1,8 @@
 import type { Config } from './types';
 
 // Short keys: max 2-3 chars, human-readable Czech abbreviations
-const KEY_MAP: Record<keyof Config, string> = {
+// Numeric config keys
+const NUM_KEY_MAP: Record<string, string> = {
   propertyPrice: 'cn',     // cena nemovitosti
   downPayment: 'vv',       // vlastní vklad
   mortgageRate: 'ur',      // úrok
@@ -15,9 +16,19 @@ const KEY_MAP: Record<keyof Config, string> = {
   maintenanceGrowthRate: 'rf', // růst fondu
   insuranceYearly: 'pj',   // pojištění
   propertyTax: 'dn',       // daň z nemovitosti
+  rentalIncomeTaxRate: 'dp', // daň z pronájmu
+  personalTaxRate: 'sd',   // sazba daně
   stockReturnRate: 'va',   // výnos akcií
   years: 'h',              // horizont
 };
+
+// Boolean config keys
+const BOOL_KEY_MAP: Record<string, string> = {
+  useExpenseLumpSum: 'pv',  // paušální výdaje
+  mortgageInterestDeduction: 'ou', // odpočet úroků
+};
+
+const KEY_MAP = { ...NUM_KEY_MAP, ...BOOL_KEY_MAP } as Record<keyof Config, string>;
 
 const REVERSE_KEY_MAP: Record<string, keyof Config> = {};
 for (const [k, v] of Object.entries(KEY_MAP)) {
@@ -92,9 +103,15 @@ function decodeNumber(s: string): number {
 export function configToQuery(config: Config, defaults: Config): string {
   const params: string[] = [];
 
-  for (const key of Object.keys(KEY_MAP) as (keyof Config)[]) {
+  for (const key of Object.keys(NUM_KEY_MAP) as (keyof Config)[]) {
     if (config[key] !== defaults[key]) {
-      params.push(`${KEY_MAP[key]}=${encodeNumber(config[key])}`);
+      params.push(`${NUM_KEY_MAP[key as string]}=${encodeNumber(config[key] as number)}`);
+    }
+  }
+
+  for (const key of Object.keys(BOOL_KEY_MAP) as (keyof Config)[]) {
+    if (config[key] !== defaults[key]) {
+      params.push(`${BOOL_KEY_MAP[key as string]}=${config[key] ? '1' : '0'}`);
     }
   }
 
@@ -117,7 +134,11 @@ export function queryToConfig(query: string, defaults: Config): Config {
 
     const configKey = REVERSE_KEY_MAP[shortKey];
     if (configKey) {
-      config[configKey] = decodeNumber(value);
+      if (configKey in BOOL_KEY_MAP) {
+        (config as Record<string, unknown>)[configKey] = value === '1';
+      } else {
+        (config as Record<string, unknown>)[configKey] = decodeNumber(value);
+      }
     }
   }
 
